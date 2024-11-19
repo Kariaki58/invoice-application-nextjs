@@ -10,10 +10,10 @@ export interface IInvoice extends Document {
 
 const InvoiceSchema = new Schema<IInvoice>({
   id: { type: String, required: true, unique: true },
-  customer_id: { type: String, required: true },
+  customer_id: { type: String, required: true, ref: 'Customer' },
   amount: { type: Number, required: true },
-  status: { type: String, required: true },
-  date: { type: Date, required: true }
+  date: { type: Date, required: true },
+  status: { type: String, enum: ['pending', 'paid'], required: true },
 });
 
 export default mongoose.models.Invoice || mongoose.model<IInvoice>('Invoice', InvoiceSchema);

@@ -24,8 +24,12 @@ export async function fetchLatestInvoices() {
     const data = await Invoice.find({})
       .sort({ date: -1 })
       .limit(5)
-      .populate('customer_id', 'name image_url email');
+      .populate({
+        path: 'customer_id',
+        select: 'name image_url email',
+      });
 
+    console.log(data);
     const latestInvoices = data.map((invoice: any) => ({
       id: invoice.id,
       name: invoice.customer_id.name,
